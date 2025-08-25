@@ -19,7 +19,7 @@ with open('startup_success_pred.pkl','rb') as f:
     success_prediction = pickle.load(f)
 
 # ✅ Load dataset locally (make sure 50_Startups.csv is in your repo)
-df = pd.read_csv("50_Startups.csv")
+df = pd.read_csv("startups.csv")
 
 st.sidebar.header("Select Features to check your startup's success")
 st.sidebar.image('https://img.jagranjosh.com/images/2022/August/1082022/what-is-a-start-up-types-funding-compressed.webp')
