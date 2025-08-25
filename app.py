@@ -14,19 +14,12 @@ st.subheader(data)
 
 st.image('https://www.atticusadvisors.co.in/wp-content/uploads/2024/10/1691517271641-1024x529.jpg')
 
+# Load trained model
 with open('startup_success_pred.pkl','rb') as f:
     success_prediction = pickle.load(f)
 
-# Load Data
-import kagglehub
-
-# Download latest version
-path = kagglehub.dataset_download("farhanmd29/50-startups")
-
-print("Path to dataset files:", path)
-
-file_path = path + '/' + os.listdir(path)[0]
-df = pd.read_csv(file_path)
+# ✅ Load dataset locally (make sure 50_Startups.csv is in your repo)
+df = pd.read_csv("50_Startups.csv")
 
 st.sidebar.header("Select Features to check your startup's success")
 st.sidebar.image('https://img.jagranjosh.com/images/2022/August/1082022/what-is-a-start-up-types-funding-compressed.webp')
@@ -51,7 +44,7 @@ for i in df.iloc[:, :-1]:   # all features except target
     all_values.append(var)
 
 random.seed(132)
-# Convert to DataFrame (important!)
+# Convert to DataFrame
 user_input = pd.DataFrame([all_values], columns=df.columns[:-1])
 
 progress_bar = st.progress(0)
@@ -59,12 +52,11 @@ placeholder = st.empty()
 placeholder.subheader('Predicting Outcome')
 
 place = st.empty()
-place.image('https://ludwig.guru/blog/content/images/2017/07/startup-.gif',width = 120)
+place.image('https://ludwig.guru/blog/content/images/2017/07/startup-.gif', width=120)
 
 for i in range(100):
     time.sleep(0.05)
-    progress_bar.progress(i +1)
-
+    progress_bar.progress(i + 1)
 
 # Prediction
 ans = success_prediction.predict(user_input)[0]
@@ -81,8 +73,5 @@ else:
     place.empty()
     st.warning(body)
     progress_bar = st.progress(0)
-
-
-
 
 st.markdown('Designed by:  Aaryan Bhardwaj & Krishna Goyal')
